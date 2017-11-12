@@ -30,6 +30,6 @@ const styles = {
     textStyle: {
         fontSize: 20
     }
-}
+};
 
 export { Header };
