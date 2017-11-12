@@ -3,14 +3,14 @@ import {
   View
 } from 'react-native';
 import firebase from 'firebase';
-import { Header } from './src/components/common';
-import LoginForm from './src/components/LoginForm'
+import { Header, Button, Spinner } from './src/components/common';
+import LoginForm from './src/components/LoginForm';
 
 
 export default class App extends Component {
-  componentWillMount() {
-    state = { loggedIn: false };
+  state = { loggedIn: null };
 
+  componentWillMount() {
     // Initialize Firebase
     firebase.initializeApp({
       apiKey: 'AIzaSyAGQ12ra2fRDXzfNbFPAGQ0vAfr-M2e9MA',
@@ -28,14 +28,24 @@ export default class App extends Component {
         this.setState({ loggedIn: false });
       }
     });
+  }
 
+  renderContent() {
+    switch (this.state.loggedIn) {
+      case true:
+        return <Button>Log Out</Button>;
+      case false:
+        return <LoginForm />;
+      default:
+        return <Spinner size="large" />;
+    }
   }
 
   render() {
     return (
       <View>
         <Header headerText="Authentication" />
-        <LoginForm />
+        {this.renderContent()}
       </View>
     );
   }
